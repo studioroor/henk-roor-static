@@ -1,27 +1,17 @@
 ---
 title: "Financiële administratie"
+order: 2
 ---
 
-<article id="post-16" class="post-16 page type-page status-publish hentry">
-	<header class="entry-header">
-		<h1 class="entry-title">Financiële administratie</h1>
-	</header>
-    
-    <div class="noimg"></div>
+### Administratiekantoor Henk Roor neemt u graag werk uit handen.
 
-	<div class="entry-content post-content">
-		<h3>Administratiekantoor Henk Roor neemt u graag werk uit handen.</h3>
-<h3>Wij verrichten voor u de volgende diensten:</h3>
-<ul class="para">
-<li>Financiële administratie, waarbij we gebruikmaken van het de administratieve software van VISMA/MAMUT.</li>
-<li>Opstellen van de Jaarstukken (Verlies- &amp; Winstrekening en de jaarlijkse Balans van Bezittingen en Schulden). In beginsel worden deze stukken geleverd binnen 6 maanden na afloop van het van het kalenderjaar/boekjaar, tenzij u zelf anders verzoekt.</li>
-<li>Verzorgen van aangiften BTW (Omzetbelasting), per maand, kwartaal of jaar.</li>
-<li>Verzorgen van de salarisadministratie en het maandelijks inzenden van de aangiften Loonheffing.</li>
-<li>Verzorgen van de aangifte Inkomstenbelasting, dan wel (voor BV's of stichtingen) de aangifte Vennootschapsbelasting.</li>
-<li>Het indienen en afhandelen van Bezwaarschriften richting Belastingdienst.</li>
-<li>Het opstellen en/of beoordelen van allerhande contracten (arbeidsovereenkomsten, huurcontracten e.d.)</li>
-<li>Overige schriftelijke correspondentie, telefonische werkzaamheden</li>
-</ul>
-	</div>
-	
-</article>
+### Wij verrichten voor u de volgende diensten:
+
+- Financiële administratie, waarbij we gebruikmaken van het de administratieve software van VISMA/MAMUT.
+- Opstellen van de Jaarstukken (Verlies- & Winstrekening en de jaarlijkse Balans van Bezittingen en Schulden). In beginsel worden deze stukken geleverd binnen 6 maanden na afloop van het van het kalenderjaar/boekjaar, tenzij u zelf anders verzoekt.
+- Verzorgen van aangiften BTW (Omzetbelasting), per maand, kwartaal of jaar.
+- Verzorgen van de salarisadministratie en het maandelijks inzenden van de aangiften Loonheffing.
+- Verzorgen van de aangifte Inkomstenbelasting, dan wel (voor BV's of stichtingen) de aangifte Vennootschapsbelasting.
+- Het indienen en afhandelen van Bezwaarschriften richting Belastingdienst.
+- Het opstellen en/of beoordelen van allerhande contracten (arbeidsovereenkomsten, huurcontracten e.d.)
+- Overige schriftelijke correspondentie, telefonische werkzaamheden

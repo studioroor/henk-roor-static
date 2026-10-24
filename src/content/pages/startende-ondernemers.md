@@ -1,28 +1,21 @@
 ---
 title: "Startende ondernemers"
+order: 4
 ---
 
-<article id="post-20" class="post-20 page type-page status-publish hentry">
-	<header class="entry-header">
-		<h1 class="entry-title">Startende ondernemers</h1>
-	</header>
-    
-    <div class="noimg"></div>
+### Startende ondernemers: Baas in Eigen Bedrijf!
 
-	<div class="entry-content post-content">
-		<h3>Startende ondernemers: Baas in Eigen Bedrijf!</h3>
-<p>Een eigen zaak, wie droomt er niet van? De laatste jaren hebben meer dan ooit velen besloten 'voor zichzelf te gaan beginnen' – en 'de baas' af te schaffen. Een eigen onderneming beginnen: het brengt vrijheid met zich mee, maar ook: meer verantwoordelijkheid, meer risico's en vaak een hogere werkdruk. Niet elke (startende) ondernemer is overigens een kei in administratie of een liefhebber van papierwerk.</p>
-<p>Administratiekantoor Henk Roor kan startende ondernemers – tussen 18 en 80 jaar – vanaf de eerste dag helpen bij het opzetten van een eigen zaak. Hiertoe behoren:</p>
-<ul class="para">
-<li>Aanmelding bij de Kamer van Koophandel</li>
-<li>Aanmeldingsformulieren Belastingdienst</li>
-<li>Algemene advisering, met name over onderwerpen als 'Auto en zaak', inbreng goederen in de zaak vanuit privé, verzekeringen, en – last but not least – de hoogte van de te verwachten belastingaanslagen e.d.</li>
-<li>Begeleiding van kredietaanvragen bij uw bank</li>
-<li>Beoordeling concept-huurcontracten van bedrijfsruimten e.d.</li>
-<li>En – nog voor de feitelijke start van de zaak – mee zoeken naar een geschikte bedrijfsruimte, zowel qua locatie als qua huurprijs.</li>
-</ul>
-<p>Heel belangrijk is dat uw administratie 100% efficiënt wordt ingericht. Het gaat er hierbij niet alleen om geen facturen, kasbonnen, bankafschriften of andere documenten kwijt te raken, maar vooral om alles gestructureerd op te bergen en te bewaren. Dat vereenvoudigt de verwerking van al deze financiële documenten. Zodat de boekhouding zelf niet te veel tijd in beslag neemt.</p>
-<p>Bel ons vrijblijvend voor een (gratis) kennismakingsgesprek, waarbij we kunnen aangeven wat we voor u zouden kunnen betekenen en zo ja, tegen welke tarief. Ons telefoonnummer is: 06-41813767. In beginsel telefonisch bereikbaar van maandag tot en met zaterdag van 09.00 tot 21.00 uur.</p>
-	</div>
-	
-</article>
+Een eigen zaak, wie droomt er niet van? De laatste jaren hebben meer dan ooit velen besloten 'voor zichzelf te gaan beginnen' – en 'de baas' af te schaffen. Een eigen onderneming beginnen: het brengt vrijheid met zich mee, maar ook: meer verantwoordelijkheid, meer risico's en vaak een hogere werkdruk. Niet elke (startende) ondernemer is overigens een kei in administratie of een liefhebber van papierwerk.
+
+Administratiekantoor Henk Roor kan startende ondernemers – tussen 18 en 80 jaar – vanaf de eerste dag helpen bij het opzetten van een eigen zaak. Hiertoe behoren:
+
+- Aanmelding bij de Kamer van Koophandel
+- Aanmeldingsformulieren Belastingdienst
+- Algemene advisering, met name over onderwerpen als 'Auto en zaak', inbreng goederen in de zaak vanuit privé, verzekeringen, en – last but not least – de hoogte van de te verwachten belastingaanslagen e.d.
+- Begeleiding van kredietaanvragen bij uw bank
+- Beoordeling concept-huurcontracten van bedrijfsruimten e.d.
+- En – nog voor de feitelijke start van de zaak – mee zoeken naar een geschikte bedrijfsruimte, zowel qua locatie als qua huurprijs.
+
+Heel belangrijk is dat uw administratie 100% efficiënt wordt ingericht. Het gaat er hierbij niet alleen om geen facturen, kasbonnen, bankafschriften of andere documenten kwijt te raken, maar vooral om alles gestructureerd op te bergen en te bewaren. Dat vereenvoudigt de verwerking van al deze financiële documenten. Zodat de boekhouding zelf niet te veel tijd in beslag neemt.
+
+Bel ons vrijblijvend voor een (gratis) kennismakingsgesprek, waarbij we kunnen aangeven wat we voor u zouden kunnen betekenen en zo ja, tegen welke tarief. Ons telefoonnummer is: 06-41813767. In beginsel telefonisch bereikbaar van maandag tot en met zaterdag van 09.00 tot 21.00 uur.

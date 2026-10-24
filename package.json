@@ -13,6 +13,7 @@
     "dev": "bun run clean && bun run start"
   },
   "devDependencies": {
+    "@astrojs/markdown-remark": "6.3.8",
     "@astrojs/mdx": "^4.3.10",
     "@astrojs/sitemap": "^3.6.0",
     "@fullhuman/postcss-purgecss": "^7.0.2",

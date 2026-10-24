@@ -1,4 +1,8 @@
 ---
+import { getCollection } from 'astro:content';
+import settings from '../data/settings.json';
+import { telHref, withBase } from '../lib/urls';
+
 interface Props {
   title?: string;
   description?: string;
@@ -12,6 +16,14 @@ const {
 } = Astro.props;
 
 const currentPath = Astro.url.pathname;
+const isCurrent = (href: string) =>
+  href === withBase('/') ? currentPath === href || `${currentPath}/` === href : currentPath.startsWith(href);
+
+const pages = (await getCollection('pages')).sort((a, b) => a.data.order - b.data.order);
+const menu = [
+  { title: settings.name, href: withBase('/') },
+  ...pages.map((page) => ({ title: page.data.title, href: withBase(`/${page.id}/`) })),
+];
 ---
 
 <!DOCTYPE html>
@@ -30,7 +42,7 @@ const currentPath = Astro.url.pathname;
 <meta property="og:type" content="website" />
 <meta property="og:title" content={title} />
 <meta property="og:description" content={description} />
-<meta property="og:site_name" content="Administratiekantoor Henk Roor" />
+<meta property="og:site_name" content={settings.name} />
 
 <link rel='stylesheet' href={`${import.meta.env.BASE_URL}/wp-includes/css/dist/block-library/style.min.css`} type='text/css' media='all' />
 <link rel='stylesheet' href={`${import.meta.env.BASE_URL}/wp-content/plugins/cookie-notice/css/front.min.css`} type='text/css' media='all' />
@@ -39,6 +51,15 @@ const currentPath = Astro.url.pathname;
 <link rel='stylesheet' href={`${import.meta.env.BASE_URL}/wp-content/themes/wp-advocate-child/css/style.css`} type='text/css' media='all' />
 <link rel='stylesheet' href={`${import.meta.env.BASE_URL}/wp-content/themes/wp-advocate-child/css/custom-layout.css`} type='text/css' media='all' />
 <link rel='stylesheet' href={`${import.meta.env.BASE_URL}/wp-content/themes/wp-advocate-child/css/mobile-menu.css`} type='text/css' media='all' />
+
+<style is:global>
+  /* Image positions an editor can pick in the CMS (rehype-site-urls turns `#right` into a class). */
+  .entry-content img { max-width: 100%; height: auto; }
+  .entry-content img.align-right { float: right; max-width: 45%; margin: 0 0 1em 1.5em; }
+  .entry-content img.align-left { float: left; max-width: 45%; margin: 0 1.5em 1em 0; }
+  .entry-content img.align-wide { display: block; width: 100%; }
+  .entry-content::after { content: ''; display: table; clear: both; }
+</style>
 
 <link rel="icon" href={`${import.meta.env.BASE_URL}/wp-content/themes/wp-advocate-child/images/favicon.ico`} sizes="32x32" />
 
@@ -54,7 +75,7 @@ const currentPath = Astro.url.pathname;
         <div id="inner-header" class="clearfix">
         
             <div id="site-heading">
-                <div id="site-title"><a href={`${import.meta.env.BASE_URL}/`} title="Administratiekantoor Henk Roor" rel="home">Administratiekantoor Henk Roor</a></div>
+                <div id="site-title"><a href={withBase('/')} title={settings.name} rel="home">{settings.name}</a></div>
             </div>
             
             <div id="social-media" class="clearfix">
@@ -70,24 +91,11 @@ const currentPath = Astro.url.pathname;
               <label for="mobile-menu-toggle" id="menu-icon" class="mobile-menu-label">Menu</label>
               <input type="checkbox" id="mobile-menu-toggle" class="mobile-menu-toggle" />
               <ul id="menu-main" class="menu">
-                <li class={`menu-item menu-item-type-post_type menu-item-object-page menu-item-home${currentPath === `${import.meta.env.BASE_URL}/` || currentPath === `${import.meta.env.BASE_URL}` ? ' current-menu-item page_item current_page_item' : ''}`}>
-                  <a title="Administratiekantoor Henk Roor" href={`${import.meta.env.BASE_URL}/`} aria-current={currentPath === `${import.meta.env.BASE_URL}/` || currentPath === `${import.meta.env.BASE_URL}` ? 'page' : undefined}>Administratiekantoor Henk Roor</a>
-                </li>
-                <li class={`menu-item menu-item-type-post_type menu-item-object-page${currentPath.includes('/over-ons/') ? ' current-menu-item current_page_item' : ''}`}>
-                  <a title="Over ons" href={`${import.meta.env.BASE_URL}/over-ons/`}>Over ons</a>
-                </li>
-                <li class={`menu-item menu-item-type-post_type menu-item-object-page${currentPath.includes('/financiele-administratie/') ? ' current-menu-item current_page_item' : ''}`}>
-                  <a title="Financiële administratie" href={`${import.meta.env.BASE_URL}/financiele-administratie/`}>Financiële administratie</a>
-                </li>
-                <li class={`menu-item menu-item-type-post_type menu-item-object-page${currentPath.includes('/salarisadministratie/') ? ' current-menu-item current_page_item' : ''}`}>
-                  <a title="Salarisadministratie" href={`${import.meta.env.BASE_URL}/salarisadministratie/`}>Salarisadministratie</a>
-                </li>
-                <li class={`menu-item menu-item-type-post_type menu-item-object-page${currentPath.includes('/startende-ondernemers/') ? ' current-menu-item current_page_item' : ''}`}>
-                  <a title="Startende ondernemers" href={`${import.meta.env.BASE_URL}/startende-ondernemers/`}>Startende ondernemers</a>
-                </li>
-                <li class={`menu-item menu-item-type-post_type menu-item-object-page${currentPath.includes('/netwerken/') ? ' current-menu-item current_page_item' : ''}`}>
-                  <a title="Netwerken" href={`${import.meta.env.BASE_URL}/netwerken/`}>Netwerken</a>
-                </li>
+                {menu.map((item, i) => (
+                  <li class={`menu-item menu-item-type-post_type menu-item-object-page${i === 0 ? ' menu-item-home' : ''}${isCurrent(item.href) ? ' current-menu-item current_page_item' : ''}`}>
+                    <a title={item.title} href={item.href} aria-current={isCurrent(item.href) ? 'page' : undefined}>{item.title}</a>
+                  </li>
+                ))}
               </ul>
             </div>
           </div>
@@ -101,116 +109,71 @@ const currentPath = Astro.url.pathname;
         <slot />
       </div><!-- #content -->
 
-      {sidebar === 'photo' ? (
-        <div id="sidebar" class="widget-area" role="complementary">
+      <div id="sidebar" class:list={['widget-area', { col300: sidebar !== 'photo' }]} role="complementary">
 
-          <aside id="media_image-2" class="widget-odd widget-first widget-1 widget-logo widget widget_media_image">
-            <div class="wp-caption alignnone">
-              <a href={`${import.meta.env.BASE_URL}/`} rel="noopener">
-                <img class="image widget-logo__image" src={`${import.meta.env.BASE_URL}/wp-content/uploads/2020/05/koffer_zonderrand.jpg`} alt="Logo Henk Roor Administratiekantoor" width="187" height="89" loading="lazy" />
-              </a>
-              <p class="wp-caption-text">Een goede boekhouder verdient zichzelf terug.</p>
-            </div>
-          </aside>
+        <aside id="media_image-2" class="widget-odd widget-first widget-1 widget-logo widget widget_media_image">
+          <div class="wp-caption alignnone">
+            <a href={withBase('/')} rel="noopener">
+              <img class="image widget-logo__image" src={withBase(settings.logo)} alt={settings.logoAlt} width="187" height="89" loading="lazy" />
+            </a>
+            <p class="wp-caption-text">{settings.slogan}</p>
+          </div>
+        </aside>
 
+        {sidebar === 'photo' && settings.photo && (
           <aside id="media_image-3" class="widget-even widget-2 widget widget_media_image">
-            <img width="184" height="300" src={`${import.meta.env.BASE_URL}/wp-content/uploads/2020/09/Foto-Henk-2020-184x300.jpg`} class="image wp-image-186 attachment-medium size-medium" alt="Foto van Henk Roor" style="max-width: 100%; height: auto;" loading="lazy" srcset={`${import.meta.env.BASE_URL}/wp-content/uploads/2020/09/Foto-Henk-2020-184x300.jpg 184w, ${import.meta.env.BASE_URL}/wp-content/uploads/2020/09/Foto-Henk-2020-628x1024.jpg 628w, ${import.meta.env.BASE_URL}/wp-content/uploads/2020/09/Foto-Henk-2020-768x1253.jpg 768w, ${import.meta.env.BASE_URL}/wp-content/uploads/2020/09/Foto-Henk-2020-942x1536.jpg 942w, ${import.meta.env.BASE_URL}/wp-content/uploads/2020/09/Foto-Henk-2020.jpg 963w`} sizes="(max-width: 184px) 100vw, 184px" />
+            <img width="184" src={withBase(settings.photo)} class="image attachment-medium size-medium" alt={settings.photoAlt} style="max-width: 100%; height: auto;" loading="lazy" />
           </aside>
+        )}
 
-          <aside id="custom_html-2" class="widget_text widget-odd widget-3 widget--contact widget widget_custom_html">
-            <div class="widget-title">Contactinformatie</div>
-            <div class="textwidget custom-html-widget">
-              <p><b>Administratiekantoor Henk Roor</b></p>
-              <br />
-              <p><b>Adres:</b></p>
-              <p>
-                Achterkerkstraat 107<br />
-                3901 DA Veenendaal
-              </p>
-              <br />
-              <p><b>Telefoon:</b></p>
-              <p><a href="tel:0641813767">06-41813767</a></p>
-              <br />
-              <p><b>E-mail:</b></p>
-              <p><a href="mailto:info@henkroor.nl">info@henkroor.nl</a></p>
-              <br />
-              <p><b>Route:</b></p>
-              <a href="https://goo.gl/maps/GTF9PMFXi2amtd9z6" rel="noreferrer noopener" target="_blank">
-                <div class="picture__container">
-                  <picture class="picture picture--none">
-                    <source srcset={`${import.meta.env.BASE_URL}/wp-content/themes/wp-advocate-child/images/map.webp`} type="image/webp" />
-                    <source srcset={`${import.meta.env.BASE_URL}/wp-content/themes/wp-advocate-child/images/map.jpg`} type="image/jpeg" />
-                    <img class="picture__img" src={`${import.meta.env.BASE_URL}/wp-content/themes/wp-advocate-child/images/map.jpg`} alt="Een kaart met de locatie van Administratiekantoor Henk Roor" />
-                  </picture>
-                </div>
-              </a>
-            </div>
-          </aside>
+        <aside id="custom_html-2" class="widget_text widget-odd widget-3 widget--contact widget widget_custom_html">
+          <div class="widget-title">Contactinformatie</div>
+          <div class="textwidget custom-html-widget">
+            <p><b>{settings.name}</b></p>
+            <br />
+            <p><b>Adres:</b></p>
+            <p>
+              {settings.street}<br />
+              {settings.postalCodeCity}
+            </p>
+            <br />
+            <p><b>Telefoon:</b></p>
+            <p><a href={telHref(settings.phone)}>{settings.phone}</a></p>
+            <br />
+            <p><b>E-mail:</b></p>
+            <p><a href={`mailto:${settings.email}`}>{settings.email}</a></p>
+            {settings.routeUrl && (
+              <>
+                <br />
+                <p><b>Route:</b></p>
+                <a href={settings.routeUrl} rel="noreferrer noopener" target="_blank">
+                  {settings.map ? (
+                    <div class="picture__container">
+                      <picture class="picture picture--none">
+                        <img class="picture__img" src={withBase(settings.map)} alt={settings.mapAlt} />
+                      </picture>
+                    </div>
+                  ) : 'Bekijk de route'}
+                </a>
+              </>
+            )}
+          </div>
+        </aside>
 
-          <aside id="custom_html-3" class="widget_text widget-even widget-last widget-4 widget widget_custom_html">
-            <div class="textwidget custom-html-widget">
-              Website gemaakt door <a href="https://kokokoding.nl" target="_blank" title="Koko Koding" rel="noopener">Koko Koding</a>
-            </div>
-          </aside>
+        <aside id="custom_html-3" class="widget_text widget-even widget-last widget-4 widget widget_custom_html">
+          <div class="textwidget custom-html-widget">
+            Website gemaakt door <a href="https://kokokoding.nl" target="_blank" title="Koko Koding" rel="noopener">Koko Koding</a>
+          </div>
+        </aside>
 
-        </div>
-      ) : (
-        <div id="sidebar" class="widget-area col300" role="complementary">
-
-          <aside id="media_image-2" class="widget-odd widget-first widget-1 widget-logo widget widget_media_image">
-            <div class="wp-caption alignnone">
-              <a href={`${import.meta.env.BASE_URL}/`} rel="noopener">
-                <img class="image widget-logo__image" src={`${import.meta.env.BASE_URL}/wp-content/uploads/2020/05/koffer_zonderrand.jpg`} alt="Logo Henk Roor Administratiekantoor" width="187" height="89" loading="lazy" />
-              </a>
-              <p class="wp-caption-text">Een goede boekhouder verdient zichzelf terug.</p>
-            </div>
-          </aside>
-
-          <aside id="custom_html-2" class="widget_text widget-even widget-2 widget--contact widget widget_custom_html">
-            <div class="widget-title">Contactinformatie</div>
-            <div class="textwidget custom-html-widget">
-              <p><b>Administratiekantoor Henk Roor</b></p>
-              <br />
-              <p><b>Adres:</b></p>
-              <p>
-                Achterkerkstraat 107<br />
-                3901 DA Veenendaal
-              </p>
-              <br />
-              <p><b>Telefoon:</b></p>
-              <p><a href="tel:0641813767">06-41813767</a></p>
-              <br />
-              <p><b>E-mail:</b></p>
-              <p><a href="mailto:info@henkroor.nl">info@henkroor.nl</a></p>
-              <br />
-              <p><b>Route:</b></p>
-              <a href="https://goo.gl/maps/GTF9PMFXi2amtd9z6" rel="noreferrer noopener" target="_blank">
-                <div class="picture__container">
-                  <picture class="picture picture--none">
-                    <source srcset={`${import.meta.env.BASE_URL}/wp-content/themes/wp-advocate-child/images/map.webp`} type="image/webp" />
-                    <source srcset={`${import.meta.env.BASE_URL}/wp-content/themes/wp-advocate-child/images/map.jpg`} type="image/jpeg" />
-                    <img class="picture__img" src={`${import.meta.env.BASE_URL}/wp-content/themes/wp-advocate-child/images/map.jpg`} alt="Een kaart met de locatie van Administratiekantoor Henk Roor" />
-                  </picture>
-                </div>
-              </a>
-            </div>
-          </aside>
-
-          <aside id="custom_html-3" class="widget_text widget-odd widget-last widget-3 widget widget_custom_html">
-            <div class="textwidget custom-html-widget">
-              Website gemaakt door <a href="https://kokokoding.nl" target="_blank" title="Koko Koding" rel="noopener">Koko Koding</a>
-            </div>
-          </aside>
-
-        </div>
-      )}
+      </div>
 
     </div><!-- #container -->
   </div><!-- #main -->
 
   <footer id="colophon" role="contentinfo">
     <div id="site-generator">
-        &copy; Administratiekantoor Henk Roor - Powered by <a href="http://wordpress.org/" title="Semantic Personal Publishing Platform">WordPress.</a>
+        &copy; {settings.name} - Powered by <a href="http://wordpress.org/" title="Semantic Personal Publishing Platform">WordPress.</a>
          | <span>
             Website & Wordpress thema door <a style="text-decoration: none" href="https://kokokoding.nl" target="_blank" rel="noopener">Koko Koding</a>
         </span>
