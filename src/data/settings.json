@@ -1,0 +1,15 @@
+{
+  "name": "Administratiekantoor Henk Roor",
+  "logo": "/uploads/koffer.jpg",
+  "logoAlt": "Logo Henk Roor Administratiekantoor",
+  "slogan": "Een goede boekhouder verdient zichzelf terug.",
+  "photo": "/uploads/foto-henk.jpg",
+  "photoAlt": "Foto van Henk Roor",
+  "street": "Achterkerkstraat 107",
+  "postalCodeCity": "3901 DA Veenendaal",
+  "phone": "06-41813767",
+  "email": "info@henkroor.nl",
+  "routeUrl": "https://goo.gl/maps/GTF9PMFXi2amtd9z6",
+  "map": "/uploads/kaart.webp",
+  "mapAlt": "Een kaart met de locatie van Administratiekantoor Henk Roor"
+}

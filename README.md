@@ -7,7 +7,7 @@ This is a static version of [henkroor.nl](https://www.henkroor.nl/), converted f
 ## 🏗️ Built With
 
 - **SSG:** [Astro](https://astro.build/) v5.15.5
-- **CMS:** [Decap CMS](https://decapcms.org/) (formerly Netlify CMS)
+- **CMS:** [Drikus CMS](https://github.com/studioroor/drikus-cms)
 - **Runtime:** [Bun](https://bun.sh/) v1.3.0
 - **Hosting:** GitHub Pages
 - **Deployment:** GitHub Actions (automated)
@@ -15,41 +15,20 @@ This is a static version of [henkroor.nl](https://www.henkroor.nl/), converted f
 ## 📁 Project Structure
 
 ```
-├── src/                                      # Source files
-│   ├── layouts/                              # Astro layouts
-│   │   └── BaseLayout.astro                 # Base layout with header, footer, and sidebar
-│   ├── pages/                                # Astro pages (auto-routed)
-│   │   ├── index.astro                      # Homepage
-│   │   ├── over-ons.astro                   # About page
-│   │   ├── financiele-administratie.astro   # Financial services page
-│   │   ├── salarisadministratie.astro       # Payroll services page
-│   │   ├── startende-ondernemers.astro      # Starting entrepreneurs page
-│   │   └── netwerken.astro                  # Networks page
-│   └── content/                              # Content collections for Decap CMS
-│       ├── config.ts                        # Content collection schema
-│       └── pages/                           # Markdown content files
-│           ├── index.md
-│           ├── over-ons.md
-│           ├── financiele-administratie.md
-│           ├── salarisadministratie.md
-│           ├── startende-ondernemers.md
-│           └── netwerken.md
-├── public/                                   # Static assets (served as-is)
-│   ├── wp-content/                          # WordPress theme assets
-│   │   └── themes/wp-advocate-child/
-│   │       └── css/
-│   │           ├── style.css               # Main theme styles
-│   │           ├── custom-layout.css       # Custom flexbox layout
-│   │           └── mobile-menu.css         # Mobile menu styles
-│   ├── wp-includes/                         # WordPress core assets
-│   ├── admin/                               # Decap CMS admin interface
-│   │   ├── index.html                      # CMS interface
-│   │   └── config.yml                      # CMS configuration
-│   └── robots.txt                          # SEO robots file
-├── _site/                                   # Generated static site (gitignored)
-├── astro.config.mjs                        # Astro configuration
-├── postcss.config.js                       # PostCSS configuration
-└── package.json                            # Project dependencies & scripts
+├── .drikus/config.yml        # What Drikus CMS lets editors change (fields, labels, media folder)
+├── src/
+│   ├── content.config.ts     # Astro content collections (keep in sync with .drikus/config.yml)
+│   ├── content/
+│   │   ├── home.md           # Homepage
+│   │   └── pages/*.md        # Menu pages; `order` sets their place in the menu
+│   ├── data/settings.json    # Contact details and sidebar (logo, photo, map)
+│   ├── layouts/BaseLayout.astro
+│   ├── lib/                  # Base-path helpers and the rehype plugin for CMS content
+│   └── pages/                # index.astro (home) and [slug].astro (all other pages)
+├── public/
+│   ├── uploads/              # Images, uploaded through the CMS
+│   └── wp-content/, wp-includes/  # Original WordPress theme CSS, fonts and favicon
+└── astro.config.mjs
 ```
 
 ## 🚀 Development
@@ -109,7 +88,7 @@ Removes the `_site` directory.
 
 ## 🎨 Features
 
-- ✅ **Content Management System** with Decap CMS for easy editing
+- ✅ **Content Management System** with Drikus CMS for easy editing, including image uploads
 - ✅ **Astro-powered** with component-based architecture
 - ✅ **Type-safe content collections** for structured content
 - ✅ **Proper path handling** for GitHub Pages deployment
@@ -125,7 +104,7 @@ Removes the `_site` directory.
 
 The site is automatically deployed to GitHub Pages when changes are pushed to the `main` branch.
 
-**Live URL:** <https://drikusroor.github.io/henk-roor-static/>
+**Live URL:** <https://studioroor.github.io/henk-roor-static/>
 
 ### GitHub Actions Workflow
 
@@ -150,7 +129,7 @@ The site is configured with a base path for GitHub Pages in `astro.config.mjs`:
 
 ```javascript
 export default defineConfig({
-  site: 'https://drikusroor.github.io',
+  site: 'https://studioroor.github.io',
   base: '/henk-roor-static',
   // ...
 });
@@ -158,20 +137,15 @@ export default defineConfig({
 
 This ensures all links work correctly when deployed to GitHub Pages.
 
-### Content Collections
+### Content and images
 
-Astro's content collections provide type-safe content management:
+Content paths in Markdown and `settings.json` are written without the base path (`/uploads/foto.webp`,
+`/over-ons/`). `src/lib/urls.ts` (`withBase`) and `src/lib/rehype-site-urls.mjs` add `/henk-roor-static`
+when the site is built, so content keeps working if the site moves to its own domain: then only
+`base` in `astro.config.mjs` changes.
 
-```typescript
-const pagesCollection = defineCollection({
-  type: 'content',
-  schema: z.object({
-    title: z.string(),
-    description: z.string().optional(),
-    sidebar: z.enum(['default', 'photo']).optional().default('default'),
-  }),
-});
-```
+An image style picked in the CMS is stored after `#` in the path (`foto.webp#right`) and becomes the
+class `align-right` (also `align-left`, `align-wide`), styled in `BaseLayout.astro`.
 
 ## 📦 Assets
 
@@ -179,28 +153,24 @@ All WordPress assets (CSS, JavaScript, images, fonts) are preserved in the `publ
 
 - `public/wp-content/` - Theme and plugin assets
 - `public/wp-includes/` - WordPress core assets
-- `public/admin/` - Decap CMS admin interface
+- `public/uploads/` - Images managed through the CMS
 
 These are served as-is from the public directory.
 
 ## 🛠️ Maintenance
 
-### Content Management with Decap CMS
+### Content Management with Drikus CMS
 
-The site includes Decap CMS for easy content editing:
-
-1. **Access the CMS**: Visit `/admin/` on your deployed site
-2. **Authenticate**: Log in with GitHub OAuth
-3. **Edit content**: Use the visual editor to update pages
-4. **Publish**: Changes are committed directly to GitHub
-
-For detailed setup instructions, see [DECAP_CMS_SETUP.md](DECAP_CMS_SETUP.md)
+Henk edits the site in [Drikus CMS](https://github.com/studioroor/drikus-cms), which commits to `main`
+through the Studio Roor CMS GitHub App; GitHub Actions then deploys as usual. What can be edited is
+described in [`.drikus/config.yml`](.drikus/config.yml). Changing a field means updating that file,
+`src/content.config.ts` and the template that shows it.
 
 ### Manual Content Updates
 
 To update content manually:
 
-1. Edit the markdown files in `src/content/pages/`
+1. Edit the markdown files in `src/content/` or `src/data/settings.json`
 2. Run `bun run build` to verify changes locally
 3. Commit and push to `main` branch
 4. GitHub Actions will automatically rebuild and deploy
@@ -232,7 +202,7 @@ When making changes to this site:
 - 🚀 **Faster load times** - No database queries, pure static HTML
 - 🔒 **Better security** - No server-side code execution
 - 💰 **Lower costs** - Free hosting on GitHub Pages
-- 📝 **Modern CMS** - Decap CMS for user-friendly content management
+- 📝 **Modern CMS** - Drikus CMS for user-friendly content management
 - 🔄 **Version control** - All changes tracked in Git
 - � **Easier maintenance** - Component-based architecture
 - ⚡ **Quick builds** - Astro + Bun for fast development

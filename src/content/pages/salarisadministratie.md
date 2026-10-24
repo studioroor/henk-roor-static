@@ -1,17 +1,8 @@
 ---
 title: "Salarisadministratie"
+order: 3
 ---
 
-<article id="post-18" class="post-18 page type-page status-publish hentry">
-	<header class="entry-header">
-		<h1 class="entry-title">Salarisadministratie</h1>
-	</header>
-    
-    <div class="noimg"></div>
+### Houdt uw personeel te vriend
 
-	<div class="entry-content post-content">
-		<h3>Houdt uw personeel te vriend</h3>
-<p>Voor ondernemers met personeel in dienst kan Administratiekantoor Henk Roor op elk moment de noodzakelijke maandelijkse salarisspecificaties leveren, waarbij gebruik wordt gemaakt van het salarisprogramma SALAR. Werknemers willen tijdig kunnen beschikken over hun maandelijkse loonstrook – en gelijk hebben ze. Houdt uw personeel daarom te vriend. Of het nu gaat om vaste krachten met overwerkuren, om parttimers of om omroepkrachten: u levert de basisgegevens, wij draaien! Zo bent u niet afhankelijk van vaak nogal trage externe salarisverwerkingsbedrijven. Uiteraard wordt elke maand de aangifte Loonheffing tijdig ingezonden naar de Belastingdienst, zodat u niet wordt bedolven onder extra administratiekosten en boetes, die het gevolg kunnen zijn van het niet tijdig aanleveren van salarisgegevens.</p>
-	</div>
-	
-</article>
+Voor ondernemers met personeel in dienst kan Administratiekantoor Henk Roor op elk moment de noodzakelijke maandelijkse salarisspecificaties leveren, waarbij gebruik wordt gemaakt van het salarisprogramma SALAR. Werknemers willen tijdig kunnen beschikken over hun maandelijkse loonstrook – en gelijk hebben ze. Houdt uw personeel daarom te vriend. Of het nu gaat om vaste krachten met overwerkuren, om parttimers of om omroepkrachten: u levert de basisgegevens, wij draaien! Zo bent u niet afhankelijk van vaak nogal trage externe salarisverwerkingsbedrijven. Uiteraard wordt elke maand de aangifte Loonheffing tijdig ingezonden naar de Belastingdienst, zodat u niet wordt bedolven onder extra administratiekosten en boetes, die het gevolg kunnen zijn van het niet tijdig aanleveren van salarisgegevens.

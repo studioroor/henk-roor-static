@@ -1,0 +1,100 @@
+# yaml-language-server: $schema=https://github.com/studioroor/drikus-cms/raw/main/schema/drikus-config.schema.json
+#
+# What Drikus CMS lets editors change. The site reads the same files through
+# src/content.config.ts (pages) and src/data/settings.json (sidebar and contact details).
+icon: public/uploads/koffer.jpg
+
+# Uploaded images are committed to public/uploads and used as /uploads/<name>.
+# The site adds its /henk-roor-static base path itself (src/lib/urls.ts, src/lib/rehype-site-urls.mjs).
+media:
+  folder: public/uploads
+  publicPath: /uploads
+
+collections:
+  - name: home
+    label: Homepage
+    description: { nl: De eerste pagina van de website, en: The first page of the website }
+    file: src/content/home.md
+    fields:
+      - name: heading
+        label: Kop
+        required: true
+      - name: body
+        label: Tekst
+        type: richtext
+        imageStyles: &imageStyles
+          - { value: right, label: { nl: Rechts naast de tekst, en: Right of the text } }
+          - { value: left, label: { nl: Links naast de tekst, en: Left of the text } }
+          - { value: wide, label: { nl: Over de hele breedte, en: Full width } }
+      - name: callToAction
+        label: Tekst in het contactblok
+        hint: Staat boven de knoppen met telefoonnummer en e-mailadres. Laat leeg om het blok te verbergen.
+        type: text
+      - name: bodyBelow
+        label: Tekst onder het contactblok
+        type: richtext
+        imageStyles: *imageStyles
+      - name: title
+        label: Titel in Google en het browsertabblad
+        required: true
+        maxLength: 70
+      - name: description
+        label: Omschrijving in Google
+        type: text
+        maxLength: 160
+
+  - name: pages
+    label: { nl: Pagina's, en: Pages }
+    description: { nl: De pagina's in het menu, en: The pages in the menu }
+    folder: src/content/pages
+    summary: title
+    sortBy: order
+    create: false
+    delete: false
+    fields:
+      - name: title
+        label: Titel
+        hint: Staat bovenaan de pagina en in het menu.
+        required: true
+      - name: body
+        label: Tekst
+        type: richtext
+        imageStyles: *imageStyles
+      - name: sidebar
+        label: Zijbalk
+        type: select
+        default: default
+        options:
+          - { value: default, label: Logo en contactgegevens }
+          - { value: photo, label: Logo, foto van Henk en contactgegevens }
+      - name: description
+        label: Omschrijving in Google
+        type: text
+        maxLength: 160
+      - { name: order, type: hidden }
+
+  - name: settings
+    label: { nl: Contact en zijbalk, en: Contact and sidebar }
+    description: { nl: Gegevens die op elke pagina staan, en: Details shown on every page }
+    file: src/data/settings.json
+    fields:
+      - { name: name, label: Naam van het kantoor, required: true }
+      - name: phone
+        label: Telefoonnummer
+        required: true
+      - name: email
+        label: E-mailadres
+        required: true
+      - { name: street, label: Straat en huisnummer, required: true }
+      - { name: postalCodeCity, label: Postcode en plaats, required: true }
+      - name: routeUrl
+        label: Link naar de route
+        type: url
+        hint: Bijvoorbeeld een link naar Google Maps.
+      - { name: map, label: Kaartje, type: image }
+      - { name: mapAlt, label: Beschrijving van het kaartje, hint: Voor mensen die het plaatje niet kunnen zien. }
+      - { name: logo, label: Logo, type: image, required: true }
+      - { name: logoAlt, label: Beschrijving van het logo }
+      - { name: slogan, label: Tekst onder het logo }
+      - { name: photo, label: Foto van Henk, type: image, hint: "Staat in de zijbalk van pagina's met 'Logo, foto van Henk en contactgegevens'." }
+      - { name: photoAlt, label: Beschrijving van de foto }

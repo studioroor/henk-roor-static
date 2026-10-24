@@ -1,37 +1,42 @@
 ---
+import { getEntry, render } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
+import settings from '../data/settings.json';
+import { renderMarkdown } from '../lib/markdown';
+import { telHref } from '../lib/urls';
+
+const home = await getEntry('home', 'home');
+if (!home) throw new Error('src/content/home.md is missing');
+const { Content } = await render(home);
+const { title, description, heading, callToAction } = home.data;
+const bodyBelow = await renderMarkdown(home.data.bodyBelow);
 ---
 
-<BaseLayout title="Administratiekantoor Henk Roor | Voor de kleine ondernemer">
-<article id="post-6" class="post-6 page type-page status-publish hentry">
+<BaseLayout title={title} description={description}>
+<article id="post-home" class="page type-page status-publish hentry">
 	<header class="entry-header">
-		<h1 class="entry-title">Administratiekantoor Henk Roor</h1>
+		<h1 class="entry-title">{heading}</h1>
 	</header><!-- .entry-header -->
-    
-    <div class="noimg"></div>
+
+	<div class="noimg"></div>
 
 	<div class="entry-content post-content">
-		<h2>Administratie voor de kleine ondernemer</h2>
-<p><strong>Administratiekantoor</strong> <strong>Henk</strong> <strong>Roor </strong>verzorgt administraties voor kleine ondernemers. Tegen redelijke tarieven, waarbij het credo luidt: een goede boekhouder verdient zichzelf terug!</p>
-<h3>UW ADRES VOOR:</h3>
-<ul id="para" class="para">
-<li><em>Administraties voor kleine ondernemers en ZZP'ers</em></li>
-<li><em>Opstellen van Verlies- &amp; Winstrekeningen</em></li>
-<li><em>Belastingzaken</em></li>
-<li><em>Begeleiding van startende ondernemers</em></li>
-</ul>
-<p class="ul">
-<div class="action-call"><strong>Zoekt u een boekhouder?<br />
-Neem contact op en maak vrijblijvend een afspraak:</strong></p>
-<div class="action-call__buttons"><a class="btn btn--icon" href="tel:0641813767"><i class="icon icon-phone"></i>0641813767</a> <a class="btn btn--icon" href="mailto:info@henkroor.nl"><i class="icon icon-mail"></i>info@henkroor.nl</a></div>
-</div>
-<hr />
-<h3> CONTACTGEGEVENS:</h3>
-<p><em>Privéadres: Achterkerkstraat 107, 3901 DR Veenendaal</em></p>
-<p><em>Mobiele telefoon: 06-41813767<br />
-</em><em><br />
-</em><strong>E-mail: <a href="mailto:info@henkroor.nl">info@henkroor.nl</a></strong></p>
-		        	</div><!-- .entry-content -->
-	
+		<Content />
+		{callToAction && (
+			<div class="action-call">
+				<strong set:html={callToAction.split('\n').map((line) => line.replace(/&/g, '&amp;').replace(/</g, '&lt;')).join('<br />')} />
+				<div class="action-call__buttons">
+					<a class="btn btn--icon" href={telHref(settings.phone)}><i class="icon icon-phone"></i>{settings.phone.replace(/[^\d+]/g, '')}</a>
+					<a class="btn btn--icon" href={`mailto:${settings.email}`}><i class="icon icon-mail"></i>{settings.email}</a>
+				</div>
+			</div>
+		)}
+		{bodyBelow && (
+			<>
+				<hr />
+				<Fragment set:html={bodyBelow} />
+			</>
+		)}
+	</div><!-- .entry-content -->
 </article>
 </BaseLayout>
